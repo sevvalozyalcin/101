@@ -1,4 +1,9 @@
 ###Correlation
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 # select only the numerical columns for calculation correlation matrix
 numeric_cols = df.select_dtypes(include=np.number).columns.tolist()
 correlation = df[numeric_cols].corr().round(2)
