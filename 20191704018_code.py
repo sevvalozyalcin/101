@@ -1,20 +1,31 @@
-###new dataset
-import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
+###DENSITY AND HISTOGRAM of float_feats  
+plt.figure(figsize=(20, 5))
+n_cols = 5
+n_rows = int(np.ceil(len(float_feats) / n_cols))
 
-df=pd.read_csv("/Users/esradirican/Downloads/train2.csv", sep=";", header=None)
-print(df) 
+for i, col in enumerate(float_feats):
+    plt.subplot(n_rows, n_cols, i+1)
+    sns.kdeplot(df[col], shade=True)
+    plt.xlabel(col)
 
-# Veri setini kaydedin
-df.to_csv('train_new.csv', index=False)
+plt.tight_layout()
+plt.suptitle("FLOAT_FEATS DENSITY PLOTS", fontsize=14)
+plt.show()
 
-# Changing title of column and then remove first row which include titles
-df.columns = ['PassengerID', 'Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
-df = df.iloc[1:]
+n_cols = 6  
+n_rows = 2  
 
-df.head()  # Show the first few rows of the dataset
-df.info()  # Display information about the dataset
-df.describe()  # Show statistical summary of the dataset
-df.shape
+for i in range(0, len(binary_feats), n_cols * n_rows):
+    plt.figure(figsize=(20, 5))
+    subset = binary_feats[i:i + n_cols * n_rows]  
 
-# There are some misunderstood data which is described as numeric but written as date accidentaly
+    for j, col in enumerate(subset):
+        plt.subplot(n_rows, n_cols, j + 1)
+        sns.kdeplot(df[col], shade=True)
+        plt.xlabel(col)
+
+    plt.tight_layout()
+    plt.suptitle(f"Binary_feats Density Plots - Sayfa {i // (n_cols * n_rows) + 1}", fontsize=14)
+    plt.show()
+X = df.drop('col122', axis=1)
+y = df['col122']
